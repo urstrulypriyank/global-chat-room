@@ -4,13 +4,13 @@ import Link from "next/link";
 import { NextResponse } from "next/server";
 import { useRouter } from "next/navigation";
 import { z } from "zod";
-import ErrorFragment from "../components/ErrorFragment";
+import ErrorFragment from "./ErrorFragment";
 // END OF IMPORTS
 const userSchema = z.object({
   email: z.string().email(),
   name: z.string().min(3).max(32),
 });
-export default function LoginPage() {
+export default function SignUpPage() {
   const [user, setUser] = useState({
     email: "",
     name: "",
@@ -24,12 +24,12 @@ export default function LoginPage() {
     }
   }, [user]);
 
-  async function EnterRoom(e: React.FormEvent<HTMLFormElement>) {
+  async function EnterRoom(e) {
     try {
       e.preventDefault();
       userSchema.parse(user);
-      router.push("/chat", user);
-    } catch (error: any) {
+      router.push(`/chat?name=${user.name}&email=${user.email}`);
+    } catch (error) {
       const msgData = JSON.parse(error.message);
       let msg = [];
       for (let x of msgData) {

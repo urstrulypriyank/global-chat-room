@@ -1,10 +1,6 @@
 import React from "react";
 
-type Props = {
-  error: string;
-};
-
-const ErrorFragment = (props: Props) => {
+const ErrorFragment = (props) => {
   return (
     <div className="bg-red-600">
       <span>{props.error}</span>
