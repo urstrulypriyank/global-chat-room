@@ -15,7 +15,7 @@ export default function Page() {
   useEffect(() => {
     const fetchData = async () => {
       const res = await fetch("/api/messages");
-      const data = res.json();
+      const data = await res.json();
       setMessages([...data.message, ...messages]);
     };
     fetchData();
