@@ -2,8 +2,13 @@
 import React, { useEffect, useState } from "react";
 import { io } from "socket.io-client";
 import ChatMsg from "../components/ChatMsg";
+import { useSearchParams } from "next/navigation";
 let socket;
 export default function Page() {
+  const searchParams = useSearchParams();
+  const name = searchParams.get("name");
+  const email = searchParams.get("email");
+
   const [messages, setMessages] = useState([]);
   const [currentMessage, setCurrentMessage] = useState("");
   useEffect(() => {
@@ -26,7 +31,12 @@ export default function Page() {
   const sendMessage = (e) => {
     e.preventDefault();
     // Send the message to the server
-    socket.emit("message", currentMessage);
+    const messageToSend = {
+      message: currentMessage,
+      name,
+      email,
+    };
+    socket.emit("message", messageToSend);
     // Clear the currentMessage state
     setCurrentMessage("");
   };
@@ -47,7 +57,7 @@ export default function Page() {
       >
         <div className=" flex px-2 space-x-10">
           <h2 className="text-2xl font-bold">
-            Global Chat Room{"  "}(userName)
+            Global Chat Room{"  "}({name})
           </h2>
         </div>
       </div>
@@ -56,7 +66,10 @@ export default function Page() {
       <div className="h-[80vh] w-full overflow-y-scroll py-2 px-7">
         {/* Display the messages */}
         {messages.map((message, index) => (
-          <ChatMsg message={{ name: message, message }} />
+          <ChatMsg
+            message={{ name: message.name, message: message.message }}
+            key={message.name + index + message.message}
+          />
         ))}
       </div>
       {/* forms container */}

@@ -7,7 +7,10 @@ const chatSchema = new mongoose.Schema({
   email: {
     type: String,
     required: [true, "Please Provide Email"],
-    unique: true,
+  },
+  message: {
+    type: String,
+    required: [true, "Please Provide message"],
   },
   timestamp: {
     type: Date,
@@ -15,6 +18,6 @@ const chatSchema = new mongoose.Schema({
   },
 });
 
-const Chat = mongoose.model.chat || mongoose.model("chat", chatSchema);
+const Chat = mongoose.model("chat", chatSchema);
 
 export default Chat;

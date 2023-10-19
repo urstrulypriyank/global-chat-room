@@ -1,5 +1,9 @@
 import Image from "next/image";
-
+import SignUpPage from "@/app/components/SignUpPage";
 export default function Home() {
-  return <main>Welcome to main page</main>;
+  return (
+    <main>
+      <SignUpPage />
+    </main>
+  );
 }
