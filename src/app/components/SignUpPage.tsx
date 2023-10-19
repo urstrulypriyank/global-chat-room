@@ -10,7 +10,7 @@ const userSchema = z.object({
   email: z.string().email(),
   name: z.string().min(3).max(32),
 });
-export default function LoginPage() {
+export default function SignUpPage() {
   const [user, setUser] = useState({
     email: "",
     name: "",
@@ -24,12 +24,12 @@ export default function LoginPage() {
     }
   }, [user]);
 
-  async function EnterRoom(e) {
+  async function EnterRoom(e: React.FormEvent<HTMLFormElement>) {
     try {
       e.preventDefault();
       userSchema.parse(user);
-      router.push("/chat");
-    } catch (error) {
+      router.push(`/chat?name=${user.name}&email=${user.email}`);
+    } catch (error: any) {
       const msgData = JSON.parse(error.message);
       let msg = [];
       for (let x of msgData) {
