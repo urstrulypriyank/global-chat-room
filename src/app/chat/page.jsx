@@ -11,15 +11,14 @@ export default function Page() {
 
   const [messages, setMessages] = useState([]);
   const [currentMessage, setCurrentMessage] = useState("");
+
   useEffect(() => {
     const fetchData = async () => {
       const res = await fetch("/api/messages");
-      const data = await res.json();
+      const data = res.json();
       setMessages([...data.message, ...messages]);
     };
     fetchData();
-  }, []);
-  useEffect(() => {
     socket = io(process.env.NEXT_PUBLIC_DOMAIN, {
       path: "/api/server",
       addTrailingSlash: false,
