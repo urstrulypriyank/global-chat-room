@@ -28,6 +28,7 @@ export default function LoginPage() {
     try {
       e.preventDefault();
       userSchema.parse(user);
+      router.push("/chat", user);
     } catch (error: any) {
       const msgData = JSON.parse(error.message);
       let msg = [];
