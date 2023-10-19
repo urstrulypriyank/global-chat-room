@@ -1,6 +1,7 @@
 import { Server as ServerFromHttp } from "http";
 import { Server as ServerIO } from "socket.io";
 import { connect } from "../../dbConfig/dbconfig";
+import saveUser from "../../utils/saveUser";
 connect();
 const ioHandler = (req, res) => {
   try {
@@ -20,6 +21,11 @@ const ioHandler = (req, res) => {
           console.log(messageObject);
           io.emit("message", {
             name: messageObject.name,
+            message: messageObject.message,
+          });
+          saveUser({
+            name: messageObject.name,
+            email: messageObject.email,
             message: messageObject.message,
           });
         });
